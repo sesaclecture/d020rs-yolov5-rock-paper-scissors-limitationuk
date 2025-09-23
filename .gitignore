@@ -1,4 +1,10 @@
+.gitignore
 .vscode
 .venv/
 __pycache__/
 .pytest_cache/
+requirements.txt
+.venv_xpu/
+*.pt
+*.onnx
+src/yolov5/

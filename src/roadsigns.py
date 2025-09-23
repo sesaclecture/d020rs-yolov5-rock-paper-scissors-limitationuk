@@ -4,24 +4,24 @@ import os
 import json
 
 # TODO: 커스텀 모델 로드
-yolov5_repo_path = "ultralytics/yolov5" # YOLOv5 모델이 있는 GitHub 저장소의 주소를 문자열 변수에 저장
-model_path = os.path.abspath("./rps_model.onnx") # 모델의 절대 경로
-model = torch.hub.load(yolov5_repo_path, 'custom', path=model_path) # 커스텀 모델 불러오기
+yolov5_repo_path = "ultralytics/yolov5"
+model_path = os.path.abspath("./signs_model.onnx")
+model = torch.hub.load(yolov5_repo_path, 'custom', path=model_path)
+video_path = os.path.expanduser("/home/intel/Downloads/signs1.mp4") 
 
 # TODO: Label 로드
-label_path = os.path.abspath("./rps_model.names.json") # json 파일의 절대 경로
+label_path = os.path.abspath("./signs_model.names.json")
 with open(label_path, 'r') as f:
     labels = json.load(f)
 
-# Video capture
-cap = cv2.VideoCapture(0) # 비디오(0번 인덱스) 객체 생성
+cap = cv2.VideoCapture(video_path)
 
 # Loop for camera frames
 while True:
     # Read frame (BGR to RGB)
     ret, frame = cap.read()
     # break the loop on error
-    if ret is False:
+    if not ret:
         break
 
     # 추론 실행 (BGR -> RGB)
